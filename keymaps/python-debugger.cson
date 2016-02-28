@@ -1,0 +1,12 @@
+# Keybindings require three things to be fully defined: A selector that is
+# matched against the focused element, the keystroke and the command to
+# execute.
+#
+# Below is a basic keybinding that registers on all platforms by applying to
+# the root workspace element.
+
+# For more detailed documentation see
+# https://atom.io/docs/latest/behind-atom-keymaps-in-depth
+"atom-workspace":
+  "alt-r": "python-debugger:toggle"
+  "alt-shift-r": "python-debugger:breakpoint"

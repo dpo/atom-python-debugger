@@ -1,0 +1,35 @@
+@import "syntax-variables";
+@red-color: @syntax-color-removed;
+@green-color: @syntax-color-added;
+@blue-color: @syntax-color-renamed;
+
+atom-text-editor::shadow .gutter .line-number {
+  &.line-number-green {
+    color: #fff;
+    background-color: @green-color;
+  }
+
+  &.line-number-blue {
+    color: #fff;
+    background-color: @blue-color;
+  }
+
+  &.line-number-red {
+    color: #fff;
+    background-color: @red-color;
+  }
+}
+
+.line {
+  &.line-green {
+    background-color: @green-color;
+  }
+
+  &.line-blue {
+    background-color: @blue-color;
+  }
+
+  &.line-red {
+    background-color: @red-color;
+  }
+}

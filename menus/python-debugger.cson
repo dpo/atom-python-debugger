@@ -1,0 +1,21 @@
+"context-menu":
+  "atom-text-editor": [
+    {
+      "label": "Toggle python-debugger"
+      "command": "python-debugger:toggle"
+    }
+  ]
+"menu": [
+  {
+    "label": "Packages"
+    "submenu": [
+      "label": "python-debugger"
+      "submenu": [
+        {
+          "label": "Toggle"
+          "command": "python-debugger:toggle"
+        }
+      ]
+    ]
+  }
+]
