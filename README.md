@@ -22,6 +22,8 @@ This package is a modification of [swift-debugger](https://atom.io/packages/swif
 5. Hit the `Run` button. Focus moves to the first breakpoint.
 6. Use the buttons provided to navigate through your source. You can enter debugger commands directly in the command field.
 
+![Atom Python Debugger](https://github.com/dpo/atom-python-debugger/raw/master/screenshots/atom-python-debugger-demo.gif)
+
 ## Current limitations
 
 - Breakpoints inserted with `alt-shift-r` or the command palette after starting the debugger are not taken into account. If you need to add breakpoints mid-course, use an explicit debugger command (e.g., `b 25`). The downside is that they won't be highlighted in the editor.
