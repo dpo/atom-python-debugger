@@ -1,5 +1,8 @@
 # Python-Debugger package
 
+[![Build Status](https://travis-ci.org/dpo/atom-python-debugger.svg?branch=master)](https://travis-ci.org/dpo/atom-python-debugger)
+[![Build status](https://ci.appveyor.com/api/projects/status/x3bskgp134oaxsxm/branch/master?svg=true)](https://ci.appveyor.com/project/dpo/atom-python-debugger/branch/master)
+
 An Atom package for an IDE-like Python debugging experience.
 
 This package is a modification of [swift-debugger](https://atom.io/packages/swift-debugger). Thanks to [aciidb0md3r](https://atom.io/users/aciidb0mb3r)!
