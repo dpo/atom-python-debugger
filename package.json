@@ -1,7 +1,7 @@
 {
   "name": "python-debugger",
   "main": "./lib/python-debugger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Develop and Debug python projects",
   "keywords": [
     "python",
