@@ -80,7 +80,7 @@ class PythonDebuggerView extends View
 
   # Extract the file name and line number output by the debugger.
   processDebuggerOutput: (data) ->
-    data_str = data.toString().trim()    
+    data_str = data.toString().trim()
     lineNumber = null
     fileName = null
 
