@@ -185,7 +185,7 @@ class PythonDebuggerView extends View
 
   getInputArguments: ->
     args = @argsEntryView.getModel().getText()
-    args.split(" ") if !@stringIsBlank(args)
+    return if !@stringIsBlank(args) then args.split(" ") else []
 
   getCommand: ->
     command = @commandEntryView.getModel().getText()
