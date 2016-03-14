@@ -11,6 +11,7 @@ import pdb
 import sys
 import traceback
 
+
 class Restart(Exception):
     """Causes a debugger to be restarted for the debugged python program."""
     pass
@@ -23,11 +24,19 @@ class AtomPDB(pdb.Pdb):
         pdb.Pdb.__init__(self, stdout=sys.__stdout__, **kwargs)
         self.prompt = ""
 
-    def do_locate(self, arg):
-        # An interface can grep the file and line number to follow along.
-        frame, lineno = self.stack[self.curindex]
-        filename = self.canonic(frame.f_code.co_filename)
-        print >> self.stdout, "file::", filename, "\nline::", lineno
+    if sys.version_info.major == 2:
+        def do_locate(self, arg):
+            # An interface can grep the file and line number to follow along.
+            frame, lineno = self.stack[self.curindex]
+            filename = self.canonic(frame.f_code.co_filename)
+            self.stdout.write("file:: %s\nline:: %s\n" % (filename, lineno))
+
+    else:
+        def do_locate(self, arg):
+            # An interface can grep the file and line number to follow along.
+            frame, lineno = self.stack[self.curindex]
+            filename = self.canonic(frame.f_code.co_filename)
+            self.message("file:: %s\nline:: %s\n" % (filename, lineno))
 
     def preloop(self):
         self.do_locate(1)
@@ -41,7 +50,7 @@ class AtomPDB(pdb.Pdb):
 
 def main():
     if not sys.argv[1:] or sys.argv[1] in ("--help", "-h"):
-        print >> sys.__stdout__, "atom_pdb.py script [args...]"
+        sys.stdout.write("atom_pdb.py script [args...]\n")
         sys.exit(2)
 
     script = sys.argv[1]
@@ -55,18 +64,21 @@ def main():
             apdb._runscript(script)
             if apdb._user_requested_quit:
                 break
-            print >> sys.__stdout__, "The program finished and will be restarted"
+            sys.stdout.write("The program finished and will be restarted\n")
         except Restart:
-            print >> sys.__stdout__, "Restarting", script, "with arguments:"
-            print >> sys.__stdout__, " ".join(sys.argv[1:])
+            sys.stdout.write("Restarting %s with arguments: " % script)
+            sys.stdout.write(" ".join(sys.argv[1:]) + "\n")
         except SystemExit:
-            print >> sys.__stdout__, "The program exited via sys.exit(). Exit status: ", sys.exc_info()[1]
+            sys.stdout.write("The program exited via sys.exit(). ")
+            sys.stdout.write("Exit status: %s\n" % sys.exc_info()[1])
         except Exception as inst:
             traceback.print_exc()
-            print >> sys.__stdout__, "Uncaught exception ", type(inst), " ... entering post-mortem debugging"
-            print >> sys.__stdout__, "Continue or Step will restart the program"
+            sys.stdout.write("Uncaught exception %s " % str(type(inst)))
+            sys.stdout.write("... entering post-mortem debugging\n")
+            sys.stdout.write("Continue or Step will restart the program\n")
             apdb.interaction(None, sys.exc_info()[2])
-            print >> sys.__stdout__, "Post-mortem debugging finished. ", script, " will be restarted."
+            sys.stdout.write("Post-mortem debugging finished.")
+            sys.stdout.write(" %s will be restarted.\n" % script)
 
 
 if __name__ == "__main__":
