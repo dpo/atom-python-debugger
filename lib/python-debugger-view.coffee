@@ -22,7 +22,6 @@ class PythonDebuggerView extends View
   getDebuggerPath: ->
     pkgs = atom.packages.getPackageDirPaths()[0]
     debuggerPath = path.join(pkgs, "python-debugger", "resources")
-    # console.log("Debugger path: ", debuggerPath)
     return debuggerPath
 
   @content: ->
