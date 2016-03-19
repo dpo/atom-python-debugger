@@ -24,7 +24,13 @@ class AtomPDB(pdb.Pdb):
         pdb.Pdb.__init__(self, stdout=sys.__stdout__, **kwargs)
         self.prompt = ""
 
-    if sys.version_info.major == 2:
+    ver = sys.version_info
+    if isinstance(ver, tuple):
+        # We're using python <= 2.6
+        py2 = True
+    else:
+        py2 = ver.major == 2
+    if py2:
         def do_locate(self, arg):
             # An interface can grep the file and line number to follow along.
             frame, lineno = self.stack[self.curindex]
@@ -71,7 +77,7 @@ def main():
         except SystemExit:
             sys.stdout.write("The program exited via sys.exit(). ")
             sys.stdout.write("Exit status: %s\n" % sys.exc_info()[1])
-        except Exception as inst:
+        except Exception as inst:  # this syntax assumes python >= 2.6
             traceback.print_exc()
             sys.stdout.write("Uncaught exception %s " % str(type(inst)))
             sys.stdout.write("... entering post-mortem debugging\n")
