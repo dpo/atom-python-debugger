@@ -77,7 +77,8 @@ def main():
         except SystemExit:
             sys.stdout.write("The program exited via sys.exit(). ")
             sys.stdout.write("Exit status: %s\n" % sys.exc_info()[1])
-        except Exception as inst:  # this syntax assumes python >= 2.6
+        except Exception:
+            inst = sys.exc_info()[1]
             traceback.print_exc()
             sys.stdout.write("Uncaught exception %s " % str(type(inst)))
             sys.stdout.write("... entering post-mortem debugging\n")
