@@ -6,6 +6,12 @@ module.exports = PythonDebugger =
   pythonDebuggerView: null
   subscriptions: null
 
+  config:
+    pythonExecutable:
+      title: "Path to Python executable to use during debugging"
+      type: "string"
+      default: "python"
+
   createDebuggerView: (backendDebugger) ->
     unless @pythonDebuggerView?
       PythonDebuggerView = require "./python-debugger-view"

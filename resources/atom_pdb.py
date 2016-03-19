@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 # This is a simple customized pdb that has no prompt and outputs the
 # name and line number of the file being debugged after each command.
 # It is appropriate for a IDE-like debugger package in a text editor,

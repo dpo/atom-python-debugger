@@ -104,9 +104,12 @@ class PythonDebuggerView extends View
     @addOutput(data_str.trim())
 
   runBackendDebugger: ->
-    args = [@debuggedFileName]
+    args = [path.join(@backendDebuggerPath, @backendDebuggerName)]
+    args.push(@debuggedFileName)
     args.push(arg) for arg in @debuggedFileArgs
-    @backendDebugger = spawn path.join(@backendDebuggerPath, @backendDebuggerName), args
+    python = atom.config.get "python-debugger.pythonExecutable"
+    console.log("python-debugger: using", python)
+    @backendDebugger = spawn python, args
 
     for breakpoint in @breakpointStore.breakpoints
       @backendDebugger.stdin.write(breakpoint.toCommand() + "\n")
