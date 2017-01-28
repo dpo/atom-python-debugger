@@ -123,7 +123,7 @@ class PythonDebuggerView extends View
     @backendDebugger.stderr.on "data", (data) =>
       @processDebuggerOutput(data)
     @backendDebugger.on "exit", (code) =>
-      @addOutput("debugger exits with code: " + code.toString().trim())
+      @addOutput("debugger exits with code: " + code.toString().trim()) if code?
 
   stopApp: ->
     @backendDebugger?.stdin.write("\nexit()\n")
