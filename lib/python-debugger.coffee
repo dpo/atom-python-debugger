@@ -46,4 +46,4 @@ module.exports = PythonDebugger =
 
     activePath = editor?.getPath()
     relative = atom.project.relativizePath(activePath)
-    themPaths = relative[0] || path.dirname(activePath)
+    themPaths = relative[0] || (path.dirname(activePath) if activePath?)

@@ -65,7 +65,7 @@ class PythonDebuggerView extends View
     editor = atom.workspace.getActiveTextEditor()
     activePath = editor.getPath()
     relative = atom.project.relativizePath(activePath)
-    pathToWorkspace = relative[0] || path.dirname(activePath)
+    pathToWorkspace = relative[0] || (path.dirname(activePath) if activePath?)
     pathToWorkspace
 
   runApp: ->
