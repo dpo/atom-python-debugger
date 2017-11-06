@@ -15,9 +15,9 @@ class PythonDebuggerView extends View
   backendDebuggerName: "atom_pdb.py"
 
   getCurrentFilePath: ->
-    editor = atom.workspace.getActivePaneItem()
-    file = editor?.buffer.file
-    return file?.path
+    return "" unless editor = atom.workspace.getActivePaneItem()
+    return "" unless buffer = editor.buffer
+    return buffer.file?.path
 
   getDebuggerPath: ->
     pkgs = atom.packages.getPackageDirPaths()[0]
