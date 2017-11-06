@@ -128,6 +128,8 @@ class PythonDebuggerView extends View
   stopApp: ->
     @backendDebugger?.stdin.write("\nexit()\n")
     @backendDebugger = null
+    @debuggedFileName = null
+    @debuggedFileArgs = []
     console.log "debugger stopped"
 
   clearOutput: ->
@@ -149,7 +151,7 @@ class PythonDebuggerView extends View
     !@debuggedFileName
 
   askForPaths: ->
-    @addOutput("To use a different entry point, set file to debug using e=fileName")
+    @addOutput("To set or change the entry point, set file to debug using e=fileName")
 
   initialize: (breakpointStore) ->
     @breakpointStore = breakpointStore
