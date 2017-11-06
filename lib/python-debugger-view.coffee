@@ -49,6 +49,16 @@ class PythonDebuggerView extends View
       @div class: "panel-body", outlet: "outputContainer", =>
         @pre class: "command-output", outlet: "output"
 
+  toggleBreakpoint: ->
+    editor = atom.workspace.getActiveTextEditor()
+    filename = editor.getTitle()
+    lineNumber = editor.getCursorBufferPosition().row + 1
+    # add to or remove breakpoint from internal list
+    cmd = @breakpointStore.toggle(new Breakpoint(filename, lineNumber))
+    # instruct debugger to add or clear breakpoint (cmd is "b" or "cl")
+    debuggerCmd = cmd + " " + @getCurrentFilePath() + ":" + lineNumber + "\n"
+    @backendDebugger.stdin.write(debuggerCmd) if @backendDebugger
+    @output.append(debuggerCmd)
   stepOverBtnPressed: ->
     @backendDebugger?.stdin.write("n\n")
 
