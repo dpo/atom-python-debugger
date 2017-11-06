@@ -32,6 +32,10 @@ class PythonDebuggerView extends View
       @subview "commandEntryView", new TextEditorView
         mini: true,
         placeholderText: "> Enter debugger commands here"
+      @button outlet: "breakpointBtn", click: "toggleBreakpoint", class: "btn", =>
+        @span "breakpoint"
+      @button class: "btn", =>
+        @span "        "
       @button outlet: "runBtn", click: "runApp", class: "btn", =>
         @span "run"
       @button outlet: "stopBtn", click: "stopApp", class: "btn", =>
