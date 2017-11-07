@@ -111,9 +111,12 @@ class PythonDebuggerView extends View
 
     if lineNumber && fileName
       lineNumber = parseInt(lineNumber)
-      options = {initialLine: lineNumber-1, initialColumn:0}
-      atom.workspace.open(fileName, options) if fs.existsSync(fileName)
-      # TODO: add decoration to current line?
+      atom.workspace.open(fileName).then (editor) ->
+        position = Point(lineNumber - 1, 0)
+        editor.setCursorBufferPosition(position)
+        editor.unfoldBufferRow(lineNumber)
+        editor.scrollToBufferPosition(position)
+        # TODO: add decoration to current line?
 
     @addOutput(data_str.trim())
 
