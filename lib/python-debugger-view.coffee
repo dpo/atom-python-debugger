@@ -208,9 +208,13 @@ class PythonDebuggerView extends View
     return false if !command
     if /e=(.*)/.test command
       match = /e=(.*)/.exec command
-      @debuggedFileName = match[1]
-      @addOutput("The file being debugged is: " + @debuggedFileName)
-      return true
+      # TODO: check that file exists
+      if fs.existsSync match[1]
+        @debuggedFileName = match[1]
+        @addOutput("The file being debugged is: " + @debuggedFileName)
+        return true
+      else
+        @addOutput("File #{match[1]} does not appear to exist")
     return false
 
   stringIsBlank: (str) ->
