@@ -71,6 +71,7 @@ class PythonDebuggerView extends View
     debuggerCmd = cmd + " " + @getCurrentFilePath() + ":" + lineNumber + "\n"
     @backendDebugger.stdin.write(debuggerCmd) if @backendDebugger
     @output.append(debuggerCmd)
+
   stepOverBtnPressed: ->
     @backendDebugger?.stdin.write("n\n")
 
