@@ -46,10 +46,16 @@ class PythonDebuggerView extends View
         @span "next"
       @button outlet: "stepInBtn", click: "stepInBtnPressed", class: "btn", =>
         @span "step"
-      @button outlet: "continueBtn", click: "continueBtnPressed", class: "btn", =>
-        @span "continue"
+      @button outlet: "varBtn", click: "varBtnPressed", class: "btn", =>
+        @span "variables"
+      @button class: "btn", =>
+        @span "        "
       @button outlet: "returnBtn", click: "returnBtnPressed", class: "btn", =>
         @span "return"
+      @button outlet: "continueBtn", click: "continueBtnPressed", class: "btn", =>
+        @span "continue"
+      @button class: "btn", =>
+        @span "        "
       @button outlet: "clearBtn", click: "clearOutput", class: "btn", =>
         @span "clear"
       @div class: "panel-body", outlet: "outputContainer", =>
@@ -92,6 +98,12 @@ class PythonDebuggerView extends View
       @askForPaths()
       return
     @runBackendDebugger()
+
+  varBtnPressed: ->
+    @backendDebugger?.stdin.write("for (__k, __v) in [(__k, __v) for __k, __v in globals().items() if not __k.startswith('__')]: print __k, '=', __v\n")
+    @backendDebugger?.stdin.write("print '-------------'\n")
+    @backendDebugger?.stdin.write("for (__k, __v) in [(__k, __v) for __k, __v in locals().items() if __k != 'self' and not __k.startswith('__')]: print __k, '=', __v\n")
+    @backendDebugger?.stdin.write("for (__k, __v) in [(__k, __v) for __k, __v in (self.__dict__ if 'self' in locals().keys() else {}).items()]: print 'self.{0}'.format(__k), '=', __v\n")
 
   # Extract the file name and line number output by the debugger.
   processDebuggerOutput: (data) ->
