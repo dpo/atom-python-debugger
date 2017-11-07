@@ -157,6 +157,7 @@ class PythonDebuggerView extends View
       @addOutput("debugger exits with code: " + code.toString().trim()) if code?
 
   stopApp: ->
+    console.log "backendDebugger is ", @backendDebugger
     @backendDebugger?.stdin.write("\nexit()\n")
     @backendDebugger = null
     @debuggedFileName = null
