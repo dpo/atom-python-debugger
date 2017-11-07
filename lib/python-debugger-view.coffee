@@ -40,8 +40,8 @@ class PythonDebuggerView extends View
         @span "run"
       @button outlet: "stopBtn", click: "stopApp", class: "btn", =>
         @span "stop"
-      @button outlet: "clearBtn", click: "clearOutput", class: "btn", =>
-        @span "clear"
+      @button class: "btn", =>
+        @span "        "
       @button outlet: "stepOverBtn", click: "stepOverBtnPressed", class: "btn", =>
         @span "next"
       @button outlet: "stepInBtn", click: "stepInBtnPressed", class: "btn", =>
@@ -50,6 +50,8 @@ class PythonDebuggerView extends View
         @span "continue"
       @button outlet: "returnBtn", click: "returnBtnPressed", class: "btn", =>
         @span "return"
+      @button outlet: "clearBtn", click: "clearOutput", class: "btn", =>
+        @span "clear"
       @div class: "panel-body", outlet: "outputContainer", =>
         @pre class: "command-output", outlet: "output"
 
