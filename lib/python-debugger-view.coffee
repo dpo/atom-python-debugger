@@ -130,7 +130,12 @@ class PythonDebuggerView extends View
   highlightLineInEditor: (fileName, lineNumber) ->
     return unless fileName && lineNumber
     lineNumber = parseInt(lineNumber)
-    atom.workspace.open(fileName).then (editor) ->
+    options = {
+      searchAllPanes: true,
+      activateItem: false,
+      activatePane: false,
+    }
+    atom.workspace.open(fileName, options).then (editor) ->
       position = Point(lineNumber - 1, 0)
       editor.setCursorBufferPosition(position)
       editor.unfoldBufferRow(lineNumber)
