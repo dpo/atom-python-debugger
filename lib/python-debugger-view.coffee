@@ -124,16 +124,18 @@ class PythonDebuggerView extends View
       fileName = fileName.trim() if fileName
       fileName = null if fileName == "<string>"
 
-    if lineNumber && fileName
-      lineNumber = parseInt(lineNumber)
-      atom.workspace.open(fileName).then (editor) ->
-        position = Point(lineNumber - 1, 0)
-        editor.setCursorBufferPosition(position)
-        editor.unfoldBufferRow(lineNumber)
-        editor.scrollToBufferPosition(position)
-        # TODO: add decoration to current line?
-
+    @highlightLineInEditor fileName, lineNumber
     @addOutput(data_str.trim())
+
+  highlightLineInEditor: (fileName, lineNumber) ->
+    return unless fileName && lineNumber
+    lineNumber = parseInt(lineNumber)
+    atom.workspace.open(fileName).then (editor) ->
+      position = Point(lineNumber - 1, 0)
+      editor.setCursorBufferPosition(position)
+      editor.unfoldBufferRow(lineNumber)
+      editor.scrollToBufferPosition(position)
+      # TODO: add decoration to current line?
 
   runBackendDebugger: ->
     args = [path.join(@backendDebuggerPath, @backendDebuggerName)]
