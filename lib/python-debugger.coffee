@@ -12,6 +12,10 @@ module.exports = PythonDebugger =
       title: "Path to Python executable to use during debugging"
       type: "string"
       default: "python"
+    focusOnCmd:
+      title: "Focus editor on current line change"
+      type: "boolean"
+      default: false
 
   createDebuggerView: (backendDebugger) ->
     unless @pythonDebuggerView?

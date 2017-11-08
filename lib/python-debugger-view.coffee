@@ -130,10 +130,11 @@ class PythonDebuggerView extends View
   highlightLineInEditor: (fileName, lineNumber) ->
     return unless fileName && lineNumber
     lineNumber = parseInt(lineNumber)
+    focusOnCmd = atom.config.get "python-debugger.focusOnCmd"
     options = {
       searchAllPanes: true,
-      activateItem: false,
-      activatePane: false,
+      activateItem: true,
+      activatePane: focusOnCmd,
     }
     atom.workspace.open(fileName, options).then (editor) ->
       position = Point(lineNumber - 1, 0)
