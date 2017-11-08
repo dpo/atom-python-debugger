@@ -184,9 +184,8 @@ class PythonDebuggerView extends View
     for breakpoint in @breakpointStore.breakpoints
       @backendDebugger.stdin.write(breakpoint.toCommand() + "\n")
 
-    # Move to first breakpoint if there are any.
-    if @breakpointStore.breakpoints.length > 0
-      @backendDebugger.stdin.write("c\n")
+    # Move to first breakpoint or run program if there are none.
+    @backendDebugger.stdin.write("c\n")
 
     @backendDebugger.stdout.on "data", (data) =>
       @processDebuggerOutput(data)
