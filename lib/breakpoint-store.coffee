@@ -37,8 +37,5 @@ class BreakpointStore
         return breakpoint
     return null
 
-  currentBreakpoints: ->
-    console.log breakpoint for breakpoint in @breakpoints
-
   clear: () ->
     @toggle breakpoint for breakpoint in @breakpoints
