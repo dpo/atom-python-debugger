@@ -84,6 +84,36 @@ class PythonDebuggerView extends View
   returnBtnPressed: ->
     @backendDebugger?.stdin.write("r\n")
 
+  loopOverBreakpoints: () ->
+    n = @breakpointStore.breakpoints.length
+    for i in [0..n-1]
+      # always yield first element; it will be spliced out
+      yield @breakpointStore.breakpoints[0]
+
+  clearBreakpoints: () ->
+    return unless @breakpointStore.breakpoints.length > 0
+    # The naive `@toggle breakpoint for breakpoint in @breakpoints`
+    # gives indexing errors because of the async loop.
+    # Clear breakpoints sequentially.
+
+    # for ... from will be supported in a future version of Atom
+    # for breakpoint from @loopOverBreakpoints()
+    #   cmd = @toggle breakpoint
+    #   debuggerCmd = cmd + " " + @getCurrentFilePath() + ":" + lineNumber + "\n"
+    #   @backendDebugger.stdin.write(debuggerCmd) if @backendDebugger
+    #   @output.append(debuggerCmd)
+    `
+    for (let breakpoint of this.loopOverBreakpoints()) {
+      cmd = this.breakpointStore.toggle(breakpoint)
+      debuggerCmd = cmd + " " + this.getCurrentFilePath() + ":" + breakpoint.lineNumber + "\n"
+     if (this.backendDebugger) {
+        this.backendDebugger.stdin.write(debuggerCmd)
+        this.output.append(debuggerCmd)
+      }
+    }
+    `
+    return
+
   workspacePath: ->
     editor = atom.workspace.getActiveTextEditor()
     activePath = editor.getPath()

@@ -32,6 +32,7 @@ module.exports = PythonDebugger =
     @subscriptions.add atom.commands.add "atom-workspace",
       "python-debugger:toggle": => @createDebuggerView().toggle()
       "python-debugger:breakpoint": => @pythonDebuggerView?.toggleBreakpoint()
+      "python-debugger:clear-all-breakpoints": => @pythonDebuggerView?.clearBreakpoints()
 
   deactivate: ->
     @backendDebuggerInputView.destroy()

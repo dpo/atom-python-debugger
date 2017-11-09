@@ -36,6 +36,3 @@ class BreakpointStore
       if breakpoint.filename == bp.filename && breakpoint.lineNumber == bp.lineNumber
         return breakpoint
     return null
-
-  clear: () ->
-    @toggle breakpoint for breakpoint in @breakpoints
