@@ -2,5 +2,7 @@ module.exports =
 class Breakpoint
   decoration: null
   constructor: (@filename, @lineNumber) ->
-  toCommand: ->
+  addCommand: ->
     "b " + @filename + ":" + @lineNumber
+  clearCommand: ->
+    "cl " + @filename + ":" + @lineNumber

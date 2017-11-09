@@ -22,14 +22,14 @@ class BreakpointStore
       d = editor.decorateMarker(marker, type: "line-number", class: "line-number-red")
       d.setProperties(type: "line-number", class: "line-number-red")
       breakpoint.decoration = d
-      return "b"
+      return breakpoint.addCommand()
     else
       editor = atom.workspace.getActiveTextEditor()
       ds = editor.getLineNumberDecorations(type: "line-number", class: "line-number-red")
       for d in ds
         marker = d.getMarker()
         marker.destroy() if marker.getBufferRange().start.row == breakpoint.lineNumber-1
-      return "cl"
+      return breakpoint.clearCommand()
 
   containsBreakpoint: (bp) ->
     for breakpoint in @breakpoints

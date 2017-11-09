@@ -63,12 +63,11 @@ class PythonDebuggerView extends View
 
   toggleBreakpoint: ->
     editor = atom.workspace.getActiveTextEditor()
-    filename = editor.getTitle()
+    filename = @getCurrentFilePath()
     lineNumber = editor.getCursorBufferPosition().row + 1
     # add to or remove breakpoint from internal list
     cmd = @breakpointStore.toggle(new Breakpoint(filename, lineNumber))
-    # instruct debugger to add or clear breakpoint (cmd is "b" or "cl")
-    debuggerCmd = cmd + " " + @getCurrentFilePath() + ":" + lineNumber + "\n"
+    debuggerCmd = cmd + "\n"
     @backendDebugger.stdin.write(debuggerCmd) if @backendDebugger
     @output.append(debuggerCmd)
 
@@ -99,13 +98,13 @@ class PythonDebuggerView extends View
     # for ... from will be supported in a future version of Atom
     # for breakpoint from @loopOverBreakpoints()
     #   cmd = @toggle breakpoint
-    #   debuggerCmd = cmd + " " + @getCurrentFilePath() + ":" + lineNumber + "\n"
+    #   debuggerCmd = cmd + "\n"
     #   @backendDebugger.stdin.write(debuggerCmd) if @backendDebugger
     #   @output.append(debuggerCmd)
     `
     for (let breakpoint of this.loopOverBreakpoints()) {
       cmd = this.breakpointStore.toggle(breakpoint)
-      debuggerCmd = cmd + " " + this.getCurrentFilePath() + ":" + breakpoint.lineNumber + "\n"
+      debuggerCmd = cmd + "\n"
      if (this.backendDebugger) {
         this.backendDebugger.stdin.write(debuggerCmd)
         this.output.append(debuggerCmd)
@@ -182,7 +181,7 @@ class PythonDebuggerView extends View
     @backendDebugger = spawn python, args
 
     for breakpoint in @breakpointStore.breakpoints
-      @backendDebugger.stdin.write(breakpoint.toCommand() + "\n")
+      @backendDebugger.stdin.write(breakpoint.addCommand() + "\n")
 
     # Move to first breakpoint or run program if there are none.
     @backendDebugger.stdin.write("c\n")
